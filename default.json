@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":separateMultipleMajorReleases"
+  ],
+  "assignees": ["kirkanos"],
+  "packageRules": [
+    {
+      "description": "Group updates for the shared pipeline runtime image and pin it by digest, since it is referenced by the floating tag :alpine",
+      "matchPackageNames": ["registry.kirkanos.net/images/ci-build"],
+      "groupName": "ci-build image",
+      "pinDigests": true
+    },
+    {
+      "description": "Group updates for the Hugo build image",
+      "matchPackageNames": [
+        "ghcr.io/gohugoio/hugo",
+        "klakegg/hugo"
+      ],
+      "groupName": "hugo image"
+    }
+  ]
+}
