@@ -36,7 +36,47 @@ Repositories may add their own settings on top:
   monorepo grouping, semantic commit prefixes, all managers enabled).
 * `:separateMultipleMajorReleases` — one PR per major version jump instead of
   going straight to the newest major.
-* `assignees: kirkanos` — every PR is assigned.
+* `assignees: kirkanos` — every PR is assigned (automerged PRs are not, since
+  nobody has to look at them).
+* `platformAutomerge: true` — merging is handed over to the forge, so a PR is
+  merged the moment its checks turn green instead of waiting for the next
+  Renovate run.
+
+### Automerge
+
+Small, low-risk updates are merged without review:
+
+| Update | Automerge | Waiting period |
+| --- | --- | --- |
+| `patch`, `digest`, `pin`, `pinDigest` | yes | 4 days |
+| `minor` of `devDependencies` | yes | 4 days |
+| `ci-build` image digests | yes | none |
+| `minor` of runtime dependencies, `major` | no — PR as before | none |
+| anything on a `0.x` / pre-release version | no — `0.x` releases break in patches | none |
+
+The four-day `minimumReleaseAge` applies to automerged updates only: nothing
+lands unseen that has not survived four days in the wild, while updates that
+get a review anyway show up immediately. The `ci-build` image is exempt — it is
+rebuilt in-house, often for security fixes, and a digest bump should not wait.
+
+The PRs are still created (that is how Renovate works), but they close
+themselves as soon as CI passes — so nothing lands unverified and nothing sits
+in the review queue. Repositories that want a stricter rule can turn it off
+again:
+
+```json
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>kirkanos/renovate-config"],
+  "packageRules": [
+    { "matchUpdateTypes": ["patch", "digest"], "automerge": false }
+  ]
+}
+```
+
+If a repository has no CI at all, a failing-check gate does not exist and
+updates merge as soon as the waiting period is over — consider
+`"automerge": false` there.
 
 ### Package rules
 
