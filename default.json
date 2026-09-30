@@ -4,32 +4,49 @@
     "config:recommended",
     ":separateMultipleMajorReleases"
   ],
-  "assignees": ["kirkanos"],
+  "assignees": [
+    "kirkanos"
+  ],
+  "assignAutomerge": true,
   "platformAutomerge": true,
   "packageRules": [
     {
       "description": "Automerge patch updates, digest bumps and pin requests — no review needed for these",
-      "matchUpdateTypes": ["patch", "digest", "pin", "pinDigest"],
+      "matchUpdateTypes": [
+        "patch",
+        "digest",
+        "pin",
+        "pinDigest"
+      ],
       "automerge": true,
       "minimumReleaseAge": "4 days"
     },
     {
       "description": "Automerge minor updates of devDependencies as well",
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor"],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
       "automerge": true,
       "minimumReleaseAge": "4 days"
     },
     {
       "description": "Never automerge unstable releases, even for patch updates",
       "matchCurrentVersion": "!/^v?[1-9]/",
-      "matchUpdateTypes": ["patch", "minor"],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
       "automerge": false,
       "minimumReleaseAge": null
     },
     {
       "description": "Group updates for the shared pipeline runtime image and pin it by digest, since it is referenced by the floating tag :alpine",
-      "matchPackageNames": ["registry.kirkanos.net/images/ci-build"],
+      "matchPackageNames": [
+        "registry.kirkanos.net/images/ci-build"
+      ],
       "groupName": "ci-build image",
       "pinDigests": true,
       "minimumReleaseAge": null
