@@ -9,6 +9,7 @@
   ],
   "assignAutomerge": true,
   "platformAutomerge": true,
+  "npmrc": "allow-remote=all",
   "packageRules": [
     {
       "description": "Automerge patch updates, digest bumps and pin requests — no review needed for these",
