@@ -84,6 +84,7 @@ updates merge as soon as the waiting period is over — consider
 | --- | --- | --- |
 | `ci-build image` | `registry.kirkanos.net/images/ci-build` | Referenced everywhere by the floating tag `:alpine`, which carries no version Renovate could bump. `pinDigests` is enabled for this image so updates of the underlying image are surfaced as digest bumps. |
 | `hugo image` | `ghcr.io/gohugoio/hugo`, `klakegg/hugo` | `klakegg/hugo` is unmaintained; repositories should migrate to `ghcr.io/gohugoio/hugo`. |
+| `woodpecker` | `woodpeckerci/woodpecker-{server,agent,cli}` (any registry prefix) | Released together with the same version, so server and agent are bumped in one PR instead of two. |
 
 ## Notes
 

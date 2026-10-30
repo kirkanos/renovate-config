@@ -59,6 +59,13 @@
         "klakegg/hugo"
       ],
       "groupName": "hugo image"
+    },
+    {
+      "description": "Group the Woodpecker server, agent and cli images, which are released together with the same version",
+      "matchPackageNames": [
+        "/(^|/)woodpeckerci/woodpecker-(server|agent|cli)$/"
+      ],
+      "groupName": "woodpecker"
     }
   ]
 }
