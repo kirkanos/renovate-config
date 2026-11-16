@@ -12,6 +12,15 @@
   "npmrc": "allow-remote=all",
   "packageRules": [
     {
+      "description": "Group all non-major updates into one PR that needs a review (rules below move the automerged ones into their own group)",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "non-major dependencies",
+      "groupSlug": "non-major"
+    },
+    {
       "description": "Automerge patch updates, digest bumps and pin requests — no review needed for these",
       "matchUpdateTypes": [
         "patch",
@@ -20,7 +29,9 @@
         "pinDigest"
       ],
       "automerge": true,
-      "minimumReleaseAge": "4 days"
+      "minimumReleaseAge": "4 days",
+      "groupName": "automerged updates",
+      "groupSlug": "automerge"
     },
     {
       "description": "Automerge minor updates of devDependencies as well",
@@ -31,17 +42,21 @@
         "minor"
       ],
       "automerge": true,
-      "minimumReleaseAge": "4 days"
+      "minimumReleaseAge": "4 days",
+      "groupName": "automerged updates",
+      "groupSlug": "automerge"
     },
     {
-      "description": "Never automerge unstable releases, even for patch updates",
+      "description": "Never automerge unstable releases, even for patch updates — they go into the reviewed group",
       "matchCurrentVersion": "!/^v?[1-9]/",
       "matchUpdateTypes": [
         "patch",
         "minor"
       ],
       "automerge": false,
-      "minimumReleaseAge": null
+      "minimumReleaseAge": null,
+      "groupName": "non-major dependencies",
+      "groupSlug": "non-major"
     },
     {
       "description": "Group updates for the shared pipeline runtime image and pin it by digest, since it is referenced by the floating tag :alpine",
