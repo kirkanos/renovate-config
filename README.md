@@ -78,6 +78,21 @@ If a repository has no CI at all, a failing-check gate does not exist and
 updates merge as soon as the waiting period is over — consider
 `"automerge": false` there.
 
+### Grouping
+
+Non-major updates are bundled so that merging one PR does not leave the others
+conflicting on the same lock file (and rebasing and re-running CI each time):
+
+| Group (branch) | Contents | Automerge |
+| --- | --- | --- |
+| `automerged updates` (`renovate/automerge`) | everything from the automerge table above | yes |
+| `non-major dependencies` (`renovate/non-major`) | `minor` of runtime dependencies, `patch`/`minor` on `0.x` | no — reviewed |
+| one PR per update | `major` | no |
+
+Automerged and reviewed updates are kept apart on purpose: a group is only
+automerged if every update in it may be, so a single runtime `minor` would
+otherwise hold all patches back. The package groups below take precedence.
+
 ### Package rules
 
 | Group | Packages | Notes |
